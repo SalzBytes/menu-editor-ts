@@ -13,7 +13,7 @@
 * chore: switched TypeScript node types to **Bun** (`@types/bun`).
 * build: explicit minified JS + CSS output.
 * build: added browser drop-in bundle → `dist/menu-editor.min.js` (SortableJS included, global `MenuEditor`) + `dist/styles.min.css`.
-* docs: examples now load the built `dist/` bundle via `<script>`; added a **Tailwind** example and refreshed the Bootstrap example UI.
+* docs: single-file `examples/index.html` loading the `dist/` bundle, with a live **Bootstrap ⇄ Tailwind** theme switcher and a redesigned UI.
 * refactor: moved core logic into `src/core/`.
 * docs: clarified `src/` (source) vs `lib/` (generated, git-ignored build output).
 * _Improvements by [@SalzBytes](https://github.com/SalzBytes)._

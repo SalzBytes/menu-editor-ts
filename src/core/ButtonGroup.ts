@@ -1,14 +1,18 @@
 import { ElementItem } from "./ElementItem";
 import { ItemEvent } from "./ItemEvent";
-import { DELETE_ICON, EDIT_ICON } from "./constants";
-import { ItemParameters } from "./types";
+import { DELETE_ICON, EDIT_ICON } from "../constants";
+import { ItemParameters } from "../types";
+import { ThemeClasses, themes } from "../themes";
 
 class Button {
     private button = document.createElement('button');
-    
+
     constructor(html: string) {
         this.button.innerHTML = html;
-        this.button.classList.add('btn', 'btn-secondary');
+    }
+    public setTheme(className: string) {
+        this.button.className = '';
+        className.split(/\s+/).filter(Boolean).forEach((c) => this.button.classList.add(c));
     }
     public onClick(f: EventListenerOrEventListenerObject) {
         this.button.addEventListener('click', f);
@@ -19,7 +23,7 @@ class Button {
     }
 
     public getParemtElement(): HTMLElement | null {
-        return this.button.closest('.list-group-item');
+        return this.button.closest('.jme-item');
     }
 }
 
@@ -27,6 +31,7 @@ export class ButtonGroup {
     protected item: ElementItem;
     protected container = document.createElement('div');
     protected eventEmitter = new ItemEvent();
+    protected theme: ThemeClasses = themes.bootstrap;
     protected buttons = {
         edit: new Button(EDIT_ICON),
         delete: new Button(DELETE_ICON)
@@ -34,6 +39,9 @@ export class ButtonGroup {
     constructor(item: ElementItem) {
         this.item = item;
         this.setEvents();
+    }
+    public setTheme(theme: ThemeClasses): void {
+        this.theme = theme;
     }
     protected setEvents(): void {
         this.buttons.delete.onClick(() => {
@@ -51,7 +59,10 @@ export class ButtonGroup {
     }
 
     public mount() {
-        this.container.classList.add('btn-group', 'btn-group-sm');
+        this.container.className = 'jme-btn-group';
+        this.theme.buttonGroup.split(/\s+/).filter(Boolean).forEach((c) => this.container.classList.add(c));
+        this.buttons.edit.setTheme(this.theme.button);
+        this.buttons.delete.setTheme(this.theme.button);
         this.container.append(this.buttons.edit.getElement());
         this.container.append(this.buttons.delete.getElement());
     }

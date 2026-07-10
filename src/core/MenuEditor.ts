@@ -1,10 +1,11 @@
 import Sortable from "sortablejs";
 import { Item } from "./Item";
 import { MenuContainer } from "./MenuContainer";
-import { NestedItemData, Itemlistener, ItemDataset, ItemData, MenuEditorOptions } from "./types";
-import { datasetToItemData, getMaxNestedLevel, setDatasetToElement, updateLevels } from "./functions";
+import { NestedItemData, Itemlistener, ItemDataset, ItemData, MenuEditorOptions } from "../types";
+import { datasetToItemData, getMaxNestedLevel, setDatasetToElement, updateLevels } from "../functions";
 import { ElementItem } from "./ElementItem";
-import { defaultOptions } from "./constants";
+import { defaultOptions } from "../constants";
+import { themes, ThemeClasses } from "../themes";
 
 export default class MenuEditor {
   private menuContainer: MenuContainer;
@@ -14,12 +15,14 @@ export default class MenuEditor {
   protected listenerDragEnd: (_evt: Sortable.SortableEvent) => void;
   protected sortableClassname: string = '';
   protected options: MenuEditorOptions;
+  protected theme: ThemeClasses;
 
   constructor(id: string, options: MenuEditorOptions = defaultOptions) {
     this.menuContainer = new MenuContainer(id);
     this.sortableClassname = `${id}-nested-sortable`;
     this.options = options;
-    this.menuContainer.setOptions({ sortableClassname: this.sortableClassname });
+    this.theme = themes[options.theme ?? 'bootstrap'];
+    this.menuContainer.setOptions({ sortableClassname: this.sortableClassname, theme: this.theme });
     this.listenerDeleteButton = () => {};
     this.listenerEditButton = () => {};
     this.listenerDragEnd = () => {};
@@ -27,7 +30,7 @@ export default class MenuEditor {
 
   public add(data: ItemDataset) {
     let newItem = new Item(data);
-    newItem.setOptions({sortableClassname: this.sortableClassname});
+    newItem.setOptions({ sortableClassname: this.sortableClassname, theme: this.theme });
     newItem.setListenerEditButton(this.listenerEditButton);
     newItem.buttonGroup.onClickEdit(this.listenerEditButton);
     newItem.setListenerDeleteButton(this.listenerDeleteButton);
@@ -57,7 +60,7 @@ export default class MenuEditor {
   public setArray(arr: Array<NestedItemData>) {
     arr.forEach((elem) => {
       let item = new Item(elem);
-      item.setOptions({sortableClassname: this.sortableClassname});
+      item.setOptions({ sortableClassname: this.sortableClassname, theme: this.theme });
       item.setListenerDeleteButton(this.listenerDeleteButton);
       item.setListenerEditButton(this.listenerEditButton);
       item.buttonGroup.onClickDelete(this.listenerDeleteButton);
@@ -116,41 +119,8 @@ export default class MenuEditor {
     updateLevels(this.menuContainer.getElement());
   }
 
-  protected makeItSortable(): void {
-    var nestedSortables = [].slice.call<NodeListOf<HTMLElement>, [], HTMLElement[]>(document.querySelectorAll("." + this.sortableClassname));
-    for (var i = 0; i < nestedSortables.length; i++) {
-      new Sortable(nestedSortables[i], {
-        handle: ".jme-handle",
-        ghostClass: "ghost",
-        group: {
-          name: 'nested',
-          pull: (to, _from, dragEl) => {
-            if (this.options.maxLevel < 0) {
-              return true;
-            }
-            let targetLevel = parseInt(to.el.ariaLevel as string);
-            let itemLevel = getMaxNestedLevel(dragEl, 0);
-            let level = itemLevel + targetLevel;
-            return (level < this.options.maxLevel);
-          },
-        },
-        onEnd: (_evt) => {
-          updateLevels(this.menuContainer.getElement());
-          this.listenerDragEnd(_evt);
-        },
-        animation: 150,
-        fallbackOnBody: true,
-        swapThreshold: 0.65,
-      });
-    }
-  }
-
-  protected makeItemSortable(item: Item): void {
-    let element: HTMLElement | null = item.getElement().querySelector('.' + this.sortableClassname);
-    if (element == null) {
-      return;
-    }
-    new Sortable(element, {
+  protected sortableConfig(withDragEnd: boolean): Sortable.Options {
+    return {
       handle: ".jme-handle",
       ghostClass: "ghost",
       group: {
@@ -167,10 +137,26 @@ export default class MenuEditor {
       },
       onEnd: (_evt) => {
         updateLevels(this.menuContainer.getElement());
+        if (withDragEnd) this.listenerDragEnd(_evt);
       },
       animation: 150,
       fallbackOnBody: true,
       swapThreshold: 0.65,
-    });
+    };
+  }
+
+  protected makeItSortable(): void {
+    var nestedSortables = [].slice.call<NodeListOf<HTMLElement>, [], HTMLElement[]>(document.querySelectorAll("." + this.sortableClassname));
+    for (var i = 0; i < nestedSortables.length; i++) {
+      new Sortable(nestedSortables[i], this.sortableConfig(true));
+    }
+  }
+
+  protected makeItemSortable(item: Item): void {
+    let element: HTMLElement | null = item.getElement().querySelector('.' + this.sortableClassname);
+    if (element == null) {
+      return;
+    }
+    new Sortable(element, this.sortableConfig(false));
   }
 }

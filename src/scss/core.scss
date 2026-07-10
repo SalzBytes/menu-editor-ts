@@ -1,0 +1,26 @@
+/**
+ * Theme-agnostic structural styles. Always safe to ship — no Bootstrap.
+ * Presentation (colors, borders, spacing beyond drag) comes from the theme.
+ */
+.jme-handle {
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+.jme-handle:active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+.ghost {
+  opacity: 0.5;
+  background-color: #48c18a;
+}
+.chosen {
+  color: #fff;
+  background-color: #c00;
+}
+.jme-item {
+  padding-right: 0;
+}
+.jme-item > .jme-list > .jme-item:first-child {
+  margin-top: 8px;
+}

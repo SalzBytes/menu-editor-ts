@@ -1,15 +1,16 @@
 import { ElementItem } from "./ElementItem";
-import { ItemData, Itemlistener, NestedItemData, ItemOptions, ItemDataset } from "./types";
+import { ItemData, Itemlistener, NestedItemData, ItemOptions, ItemDataset } from "../types";
 import { ButtonGroup } from "./ButtonGroup";
-import { HANDLER_ICON } from "./constants";
+import { HANDLER_ICON } from "../constants";
+import { themes } from "../themes";
 import { Collection } from "./Collection";
-import { itemDataToDataset, setDatasetToElement } from "./functions";
+import { itemDataToDataset, setDatasetToElement } from "../functions";
 
 export class Item implements ElementItem {
   protected element = document.createElement("div");
   protected dataset: ItemDataset;
   protected collection: Collection;
-  protected options: ItemOptions = { sortableClassname: 'nested-sortable' }
+  protected options: ItemOptions = { sortableClassname: 'nested-sortable', theme: themes.bootstrap };
   protected listenerEditButton: Itemlistener = () => {};
   protected listenerDeleteButton: Itemlistener = () => {};
   public buttonGroup: ButtonGroup;
@@ -17,12 +18,13 @@ export class Item implements ElementItem {
   constructor(data: ItemData) {
     this.collection = new Collection();
     this.buttonGroup = new ButtonGroup(this);
-    this.element.classList.add("list-group-item");
+    this.element.classList.add("jme-item");
     this.dataset = itemDataToDataset(data);
   }
 
   public setOptions(options: ItemOptions) {
     this.options = options;
+    this.buttonGroup.setTheme(options.theme);
   }
 
   public setDataset(dataset: ItemDataset): void {
@@ -40,7 +42,7 @@ export class Item implements ElementItem {
   public setListenerDeleteButton(listener: Itemlistener) {
     this.listenerDeleteButton = listener;
   }
-  
+
   public add(item: ElementItem) {
     this.collection.add(item);
   }
@@ -85,7 +87,13 @@ export class Item implements ElementItem {
     return handler;
   }
 
+  protected addClasses(el: HTMLElement, ...classNames: string[]): void {
+    classNames.filter(Boolean).forEach((c) => el.classList.add(...c.split(/\s+/)));
+  }
+
   public mount(): void {
+    let theme = this.options.theme;
+    this.addClasses(this.element, theme.item);
     let divTextActions = document.createElement("div");
     let span = document.createElement("span");
     let icon = document.createElement('i');
@@ -96,11 +104,13 @@ export class Item implements ElementItem {
     text.style.paddingLeft = "5px";
     text.innerHTML = this.dataset.text;
     let divGroup = document.createElement("div");
-    divTextActions.className = 'd-flex w-100 justify-content-between align-items-center';
+    divTextActions.className = 'jme-row';
+    this.addClasses(divTextActions, theme.row);
     span.append(handler);
     span.append(icon);
     span.append(text);
-    divGroup.classList.add("list-group", this.options.sortableClassname);
+    divGroup.classList.add("jme-list", this.options.sortableClassname);
+    this.addClasses(divGroup, theme.list);
     divTextActions.append(span);
     this.buttonGroup.mount();
     divTextActions.append(this.buttonGroup.getElement());

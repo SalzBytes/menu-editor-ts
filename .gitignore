@@ -7,7 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Package managers (Bun is source of truth)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+lib
+dist
 dist-ssr
 *.local
 

@@ -1,4 +1,4 @@
-import { ItemParameters } from "./types";
+import { ItemParameters } from "../types";
 
 export class ItemEvent {
   private eventTarget = new EventTarget();

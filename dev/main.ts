@@ -76,7 +76,7 @@ function cleanForm() {
 	txtTooltip.value = '';
 }
 
-var me = new MenuEditor('element-id', { maxLevel: 2 });
+var me = new MenuEditor('element-id', { maxLevel: 2, theme: 'bootstrap' });
 
 me.onClickDelete((event) => {
 	if (confirm('Do you want to delete the item ' + event.item.getDataset().text)) {
@@ -86,7 +86,7 @@ me.onClickDelete((event) => {
 me.onClickEdit((event) => {
 	let theItem = event.item;
 	let a = theItem.getDataset();
-	
+
 	console.log('Level: ' + theItem.getElement().ariaLevel);
 
 	txtText.value = a.text;

@@ -3,5 +3,8 @@
  * @version 1.2.0
  * @license MIT
  */
-import './scss/styles.scss';
-export { default as MenuEditor } from './MenuEditor';
+import './scss/core.scss';
+export { default as MenuEditor } from './core/MenuEditor';
+export { themes } from './themes';
+export type { ThemeName, ThemeClasses } from './themes';
+export type { MenuEditorOptions } from './types';

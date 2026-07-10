@@ -49,7 +49,7 @@ function updateLevels(element: HTMLElement, level: number = -1) {
   let children = element.children;
   for (let i = 0; i < children.length; i++) {
     let updatedLevel = level;
-    if (children[i].matches(".list-group-item")) {
+    if (children[i].matches(".jme-item")) {
       updatedLevel = updatedLevel + 1;
     }
     updateLevels(children[i] as HTMLElement, updatedLevel);
@@ -57,7 +57,7 @@ function updateLevels(element: HTMLElement, level: number = -1) {
 }
 
 function getMaxNestedLevel(element: HTMLElement, currentLevel: number) {
-  let divElements = element.querySelectorAll<HTMLElement>(".list-group-item");
+  let divElements = element.querySelectorAll<HTMLElement>(".jme-item");
   let maxLevel = currentLevel;
   for (let i = 0; i < divElements.length; i++) {
     let nestedLevel = getMaxNestedLevel(divElements[i], currentLevel + 1);

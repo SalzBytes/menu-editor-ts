@@ -1,19 +1,22 @@
-# JavaScript Menu Editor
+# Menu Editor — Bootstrap 5 example
 
-## Example using Bootstrap 5
+Static demo using the **built** browser bundle (`dist/`). No build step, no npm.
 
-Bootstrap and Font Awesome are loaded via CDN in `index.html` — the library
-itself does **not** bundle them. Set `theme: 'bootstrap'` (default) or
-`'tailwind'` in `main.js`.
-
-#### Install
+### Build the bundle first (from the repo root)
 
 ```shell
 bun install
+bun run build
 ```
 
-#### Run
+### Open the example
+
+Just open `index.html` in a browser (or serve the repo root), e.g.:
 
 ```shell
-bun run dev
+bunx serve .
 ```
+
+It loads `../../dist/menu-editor.min.js` (SortableJS bundled) and
+`../../dist/styles.min.css`. Bootstrap 5 + Font Awesome come from CDN.
+Set `theme: 'bootstrap'` (default) or `'tailwind'` in `main.js`.

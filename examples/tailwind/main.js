@@ -25,8 +25,8 @@ const cleanForm = () => {
   txtHref.value = txtText.value = txtIcon.value = txtTooltip.value = "";
 };
 
-// theme: 'bootstrap' (default) | 'tailwind'. Load that framework's CSS yourself.
-const menuEditor = new MenuEditor("element-id", { maxLevel: 3, theme: "bootstrap" });
+// Tailwind theme — load Tailwind's CSS yourself (CDN in index.html).
+const menuEditor = new MenuEditor("element-id", { maxLevel: 3, theme: "tailwind" });
 
 menuEditor.onClickDelete((event) => {
   if (confirm("Delete the item " + event.item.getDataset().text + "?")) {

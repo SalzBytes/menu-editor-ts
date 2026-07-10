@@ -1,23 +1,25 @@
-# Menu Editor — live demo
+# Menu Editor — Material You demo
 
-Single-file demo (`index.html`) with a **theme switcher** (Bootstrap ⇄ Tailwind).
-The page chrome is plain CSS; only the menu editor's item classes change with the
-theme. The chosen framework's CSS is loaded on demand — the library bundles none.
+Single-file demo (`index.html`) styled with the **Material Design 3 (Material You)**
+design system, featuring a live **Bootstrap ⇄ Tailwind** theme switcher for the
+menu editor. The page chrome uses the MD3 token system (via Tailwind Play CDN);
+only the menu editor's item classes change with the selected theme, and that
+theme's framework CSS is loaded on demand — the library bundles none.
 
-### Build the bundle first (from the repo root)
+### Run it
+
+From the repo root:
 
 ```shell
 bun install
-bun run build
+bun run dev      # builds the dist bundle, then serves the repo
 ```
 
-### Open the demo
+`bun run dev` builds `dist/menu-editor.min.js` (SortableJS bundled, global
+`MenuEditor`) + `dist/styles.min.css`, then serves the repo root at
+<http://localhost:3000> — open **`/examples/`**.
 
-Serve the repo root and open `/examples/`, e.g.:
+### Keyboard reordering
 
-```shell
-bunx serve .
-```
-
-It loads `../dist/menu-editor.min.js` (SortableJS bundled, global `MenuEditor`)
-and `../dist/styles.min.css`.
+Focus a drag handle (Tab) and use the arrow keys: **↑/↓** reorder among
+siblings, **→ / Enter** nest into the item above, **←** outdent.

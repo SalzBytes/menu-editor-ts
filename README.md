@@ -210,6 +210,11 @@ bun install
 bun run dev
 ```
 
+`bun run dev` builds the browser `dist/` bundle and serves the repo at
+<http://localhost:3000> — open **`/examples/`** for a single-file **Material You**
+demo with a live Bootstrap ⇄ Tailwind theme switcher and keyboard reordering
+(↑/↓ move, →/Enter nest, ← outdent).
+
 Build the library:
 
 ```shell

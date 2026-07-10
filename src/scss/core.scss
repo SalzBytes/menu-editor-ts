@@ -9,21 +9,68 @@
   .jme-handle {
     cursor: grab;
     cursor: -webkit-grab;
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+    border-radius: 6px;
+    color: #9aa0a6;                 // muted, theme-agnostic
+    line-height: 1;
+    touch-action: none;
+    margin-right: 6px;              // space between the grip and the item's icon/label
 
+    &:hover { color: #5f6368; }
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 1px;
+    }
     &:active {
       cursor: grabbing;
       cursor: -webkit-grabbing;
     }
   }
 
+  // The `.jme-row` owns all inner spacing, so drop any theme padding on the
+  // node itself (e.g. Bootstrap `.list-group-item`) to avoid doubled gaps.
   .jme-item {
-    padding-right: 0;
+    padding: 0;
   }
 
+  // row: label on the left, actions on the right, comfortable vertical rhythm.
+  // Horizontal padding keeps the grip off the left edge and the action
+  // buttons off the right edge of the item.
+  .jme-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .jme-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;                   // allow long labels to truncate, not overflow
+
+    .item-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  // nested list: indent + spacing so hierarchy reads clearly
+  .jme-list {
+    margin-top: 8px;
+  }
+  .jme-item > .jme-list {
+    padding-left: 20px;
+  }
   .jme-item > .jme-list > .jme-item:first-child {
     margin-top: 8px;
   }
 }
+
 
 /* SortableJS drag state — the ghost/chosen nodes stay inside the editor list */
 .jme-editor .ghost,

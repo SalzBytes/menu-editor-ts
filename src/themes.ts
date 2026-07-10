@@ -7,7 +7,11 @@ export interface ThemeClasses {
   list: string;
   /** each menu node */
   item: string;
-  /** row holding label + actions */
+  /**
+   * row holding label + actions. Layout (flex, alignment, padding) is owned by
+   * the structural `.jme-row` rule in core.scss — put ONLY visual theme classes
+   * here (usually none), never flex/spacing, to avoid double layout.
+   */
   row: string;
   /** action button group wrapper */
   buttonGroup: string;
@@ -21,14 +25,14 @@ export const themes: Record<ThemeName, ThemeClasses> = {
   bootstrap: {
     list: "list-group",
     item: "list-group-item",
-    row: "d-flex w-100 justify-content-between align-items-center",
+    row: "",
     buttonGroup: "btn-group btn-group-sm",
     button: "btn btn-secondary",
   },
   tailwind: {
     list: "flex flex-col gap-2",
     item: "border border-gray-200 rounded p-2 bg-white",
-    row: "flex w-full justify-between items-center",
+    row: "",
     buttonGroup: "inline-flex gap-1",
     button:
       "inline-flex items-center px-2 py-1 text-sm rounded bg-gray-600 text-white hover:bg-gray-700",

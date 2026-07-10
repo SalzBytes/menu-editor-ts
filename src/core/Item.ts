@@ -80,12 +80,14 @@ export class Item implements ElementItem {
 
   protected createHandler(): HTMLSpanElement {
     let handler = document.createElement('span');
-    handler.style.mixBlendMode = 'difference';
-    handler.style.filter = "invert(1) grayscale(1)";
     handler.className = 'jme-handle';
+    handler.setAttribute('tabindex', '0');
+    handler.setAttribute('role', 'button');
+    handler.setAttribute('aria-label', 'Reorder item — arrow keys to move, Enter to nest');
     handler.innerHTML = HANDLER_ICON;
     return handler;
   }
+
 
   protected addClasses(el: HTMLElement, ...classNames: string[]): void {
     classNames.filter(Boolean).forEach((c) => el.classList.add(...c.split(/\s+/)));
@@ -96,6 +98,7 @@ export class Item implements ElementItem {
     this.addClasses(this.element, theme.item);
     let divTextActions = document.createElement("div");
     let span = document.createElement("span");
+    span.className = 'jme-label';
     let icon = document.createElement('i');
     icon.className = this.dataset.icon;
     let handler = this.createHandler();

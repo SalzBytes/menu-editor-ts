@@ -30,7 +30,7 @@ export const themes: Record<ThemeName, ThemeClasses> = {
     button: "btn btn-secondary",
   },
   tailwind: {
-    list: "flex flex-col gap-2",
+    list: "flex flex-col",
     item: "border border-gray-200 rounded p-2 bg-white",
     row: "",
     buttonGroup: "inline-flex gap-1",

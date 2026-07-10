@@ -83,6 +83,7 @@ export class Item implements ElementItem {
     handler.className = 'jme-handle';
     handler.setAttribute('tabindex', '0');
     handler.setAttribute('role', 'button');
+    handler.setAttribute('title', 'Drag to reorder');
     handler.setAttribute('aria-label', 'Reorder item — arrow keys to move, Enter to nest');
     handler.innerHTML = HANDLER_ICON;
     return handler;

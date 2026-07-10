@@ -5,6 +5,8 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   build: {
     outDir: 'lib',
+    minify: true,
+    cssMinify: true,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "MenuEditor",
@@ -19,7 +21,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name == 'style.css') {
+          if (assetInfo.name?.endsWith('.css')) {
             return 'css/styles.css';
           }
           return `[name][hash][extname]`;

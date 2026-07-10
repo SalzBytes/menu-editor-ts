@@ -1,6 +1,6 @@
 {
-  "name": "@davicotico/menu-editor",
-  "version": "1.2.0",
+  "name": "@SalzBytes/menu-editor-ts",
+  "version": "1.3.0",
   "description": "Vanilla Javascript Menu Editor Library (made with Typescript)",
   "main": "./lib/index.js",
   "publishConfig": {
@@ -11,19 +11,22 @@
       "import": "./lib/index.js",
       "require": "./lib/index.umd.js"
     },
-    "./lib/css/*": {
+    "./css/*": {
       "import": "./lib/css/*",
       "require": "./lib/css/*"
     }
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "bun run build:dist && bunx serve . -l 3000 --no-request-logging",
+    "build": "tsc && vite build && vite build --config vite.config.dist.ts",
+    "build:lib": "tsc && vite build",
+    "build:dist": "vite build --config vite.config.dist.ts",
+    "prepare": "bun run build",
     "preview": "vite preview"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davicotico/menu-editor.git"
+    "url": "git+https://github.com/SalzBytes/menu-editor-ts.git"
   },
   "keywords": [
     "menu-editor",
@@ -37,21 +40,40 @@
     "name": "David Tomas Ticona Saravia",
     "url": "https://davidticona.com"
   },
+  "contributors": [
+    {
+      "name": "SalzBytes",
+      "url": "https://github.com/SalzBytes"
+    }
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davicotico/menu-editor/issues"
+    "url": "https://github.com/SalzBytes/menu-editor-ts/issues"
   },
-  "homepage": "https://davidticona.com/demos/javascript-menu-editor/",
+  "homepage": "https://github.com/SalzBytes/menu-editor-ts#readme",
   "devDependencies": {
-    "@types/node": "^20.2.1",
-    "@types/sortablejs": "^1.15.1",
-    "sass": "^1.62.1",
-    "typescript": "^5.0.2",
-    "vite": "^4.5.9",
-    "vite-plugin-dts": "^4.5.0"
+    "@types/bun": "^1.3.14",
+    "@types/sortablejs": "^1.15.9",
+    "@typescript/typescript6": "^6.0.2",
+    "bootstrap": "^5.3.8",
+    "sass": "^1.101.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4",
+    "vite-plugin-dts": "^5.0.3"
   },
   "dependencies": {
-    "bootstrap": "^5.3.2",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.7"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.0.0",
+    "tailwindcss": "^3.0.0 || ^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "bootstrap": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    }
   }
 }

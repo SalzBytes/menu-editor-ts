@@ -1,4 +1,5 @@
-import { ElementItem } from "./ElementItem";
+import { ElementItem } from "./core/ElementItem";
+import { ThemeClasses, ThemeName } from "./themes";
 
 export interface BaseItemData {
   text: string;
@@ -17,6 +18,7 @@ interface NestedItemData extends ItemData {
 
 interface ItemOptions {
   sortableClassname: string;
+  theme: ThemeClasses;
 }
 
 interface ItemParameters {
@@ -27,6 +29,7 @@ type Itemlistener = (params: ItemParameters) => void;
 
 interface MenuEditorOptions {
   maxLevel: number;
+  theme?: ThemeName;
 }
 
 export type {
@@ -36,5 +39,5 @@ export type {
   ItemParameters,
   ItemData,
   ItemDataset,
-  MenuEditorOptions
+  MenuEditorOptions,
 };

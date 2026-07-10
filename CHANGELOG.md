@@ -2,6 +2,22 @@
 
 ## Changelog
 
+#### v1.3.0
+
+* chore: migrated package manager to **Bun** (`bun.lock` is source of truth).
+* feat: **theme option** (`bootstrap` | `tailwind`) via a class registry (`src/themes.ts`). Default `bootstrap`.
+* refactor: split structural (`jme-*`) vs presentational classes; drag/level logic no longer depends on theme class names.
+* feat: **Bootstrap is now optional** — the bundle ships only theme-agnostic structural styles (`src/scss/core.scss`); Bootstrap SCSS no longer imported into the library.
+* feat: framework CSS (Bootstrap/Tailwind) are now **optional peer dependencies**.
+* fix: structural styles scoped under the `.jme-editor` root class so the library no longer leaks styles into the host page or clashes with its CSS framework.
+* chore: switched TypeScript node types to **Bun** (`@types/bun`).
+* build: explicit minified JS + CSS output.
+* build: added browser drop-in bundle → `dist/menu-editor.min.js` (SortableJS included, global `MenuEditor`) + `dist/styles.min.css`.
+* docs: single-file `examples/index.html` loading the `dist/` bundle, styled with the **Material You (MD3)** design system and a live **Bootstrap ⇄ Tailwind** theme switcher. `bun run dev` builds the bundle then serves it; the old root `index.html` + `dev/` vite playground were removed.
+* refactor: moved core logic into `src/core/`.
+* docs: clarified `src/` (source) vs `lib/` (generated, git-ignored build output).
+* _Improvements by [@SalzBytes](https://github.com/SalzBytes)._
+
 #### v1.2.0
 
 * feat: Added a new onDragEnd event to handle the end of drag interactions (thanks to [@Sjohn21](https://github.com/Sjohn21))
@@ -15,6 +31,6 @@
 * **New feature:** maxLevel option (zero-based value, where zero indicates the first level of the nested menu).
 * Improvements in the layout of items and buttons.
 
-#### v1.0.0 
+#### v1.0.0
 
 * First release

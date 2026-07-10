@@ -4,14 +4,14 @@
   "description": "Vanilla Javascript Menu Editor Library (made with Typescript)",
   "main": "./lib/index.js",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
   },
   "exports": {
     ".": {
       "import": "./lib/index.js",
       "require": "./lib/index.umd.js"
     },
-    "./lib/css/*": {
+    "./css/*": {
       "import": "./lib/css/*",
       "require": "./lib/css/*"
     }

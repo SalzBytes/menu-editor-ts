@@ -16,8 +16,6 @@ yarn.lock
 pnpm-lock.yaml
 
 # Build output
-lib
-dist
 dist-ssr
 *.local
 

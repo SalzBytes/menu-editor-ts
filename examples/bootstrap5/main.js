@@ -56,7 +56,8 @@ const cleanForm = () => {
 	txtTooltip.value = '';
 };
 
-const menuEditor = new MenuEditor("element-id", { maxLevel: 3 });
+// theme: 'bootstrap' (default) | 'tailwind'. Load that framework's CSS yourself.
+const menuEditor = new MenuEditor("element-id", { maxLevel: 3, theme: "bootstrap" });
 menuEditor.onClickDelete((event) => {
 	if (confirm('Do you want to delete the item ' + event.item.getDataset().text)) {
 		event.item.remove(); // remove the item

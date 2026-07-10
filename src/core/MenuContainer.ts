@@ -37,7 +37,7 @@ export class MenuContainer{
   }
 
   public mount(): void {
-    this.element.classList.add("jme-list", this.options.sortableClassname);
+    this.element.classList.add("jme-editor", "jme-list", this.options.sortableClassname);
     this.options.theme.list.split(/\s+/).filter(Boolean).forEach((c) => this.element.classList.add(c));
     this.collection.getItems().forEach((item) => {
       item.setOptions(this.options);

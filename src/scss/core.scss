@@ -1,26 +1,38 @@
 /**
  * Theme-agnostic structural styles. Always safe to ship — no Bootstrap.
  * Presentation (colors, borders, spacing beyond drag) comes from the theme.
+ *
+ * Everything is scoped under the `.jme-editor` root class so the library
+ * never leaks styles into the host page or clashes with its CSS framework.
  */
-.jme-handle {
-  cursor: grab;
-  cursor: -webkit-grab;
+.jme-editor {
+  .jme-handle {
+    cursor: grab;
+    cursor: -webkit-grab;
+
+    &:active {
+      cursor: grabbing;
+      cursor: -webkit-grabbing;
+    }
+  }
+
+  .jme-item {
+    padding-right: 0;
+  }
+
+  .jme-item > .jme-list > .jme-item:first-child {
+    margin-top: 8px;
+  }
 }
-.jme-handle:active {
-  cursor: grabbing;
-  cursor: -webkit-grabbing;
-}
-.ghost {
+
+/* SortableJS drag state — the ghost/chosen nodes stay inside the editor list */
+.jme-editor .ghost,
+.ghost.jme-item {
   opacity: 0.5;
   background-color: #48c18a;
 }
-.chosen {
+.jme-editor .chosen,
+.chosen.jme-item {
   color: #fff;
   background-color: #c00;
-}
-.jme-item {
-  padding-right: 0;
-}
-.jme-item > .jme-list > .jme-item:first-child {
-  margin-top: 8px;
 }

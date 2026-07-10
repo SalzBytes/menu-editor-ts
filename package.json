@@ -1,6 +1,6 @@
 {
-  "name": "@davicotico/menu-editor",
-  "version": "1.2.0",
+  "name": "@SalzBytes/menu-editor-ts",
+  "version": "1.3.0",
   "description": "Vanilla Javascript Menu Editor Library (made with Typescript)",
   "main": "./lib/index.js",
   "publishConfig": {
@@ -21,11 +21,12 @@
     "build": "tsc && vite build && vite build --config vite.config.dist.ts",
     "build:lib": "tsc && vite build",
     "build:dist": "vite build --config vite.config.dist.ts",
+    "prepare": "bun run build",
     "preview": "vite preview"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davicotico/menu-editor.git"
+    "url": "git+https://github.com/SalzBytes/menu-editor-ts.git"
   },
   "keywords": [
     "menu-editor",
@@ -47,9 +48,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davicotico/menu-editor/issues"
+    "url": "https://github.com/SalzBytes/menu-editor-ts/issues"
   },
-  "homepage": "https://davidticona.com/demos/javascript-menu-editor/",
+  "homepage": "https://github.com/SalzBytes/menu-editor-ts#readme",
   "devDependencies": {
     "@types/bun": "^1.3.14",
     "@types/sortablejs": "^1.15.9",

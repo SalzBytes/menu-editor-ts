@@ -7,11 +7,42 @@ Vanilla Javascript Menu Editor Library (made with Typescript).
 > for my purposes (Bun, optional CSS frameworks, a theme registry, structural
 > `jme-*` classes). It is **not published to npm and has no CDN build yet**; the
 > package will be available in the future. For now, use it straight from this
-> repository.
+> repository. This **1.3.0** upgrade was done with the help of AI.
 
 ## Install
 
-Not on npm/CDN yet. Clone the repo and build the outputs locally:
+Not on npm/CDN yet — install straight from the GitHub repo.
+
+### From GitHub (recommended)
+
+Add it as a git dependency. The package's `prepare` script builds `lib/` and
+`dist/` automatically on install, so the output is ready to import:
+
+```shell
+bun add github:SalzBytes/menu-editor-ts
+# npm:  npm install github:SalzBytes/menu-editor-ts
+# yarn: yarn add SalzBytes/menu-editor-ts
+# pin a tag/branch/commit:  bun add github:SalzBytes/menu-editor-ts#v1.3.0
+```
+
+This adds an entry like this to your `package.json`:
+
+```json
+"dependencies": {
+  "@SalzBytes/menu-editor-ts": "github:SalzBytes/menu-editor-ts"
+}
+```
+
+Then import as usual:
+
+```js
+import '@SalzBytes/menu-editor-ts/lib/css/styles.css';
+import { MenuEditor } from '@SalzBytes/menu-editor-ts';
+```
+
+### From a local clone
+
+To hack on it or use the `dist/` browser bundle directly:
 
 ```shell
 git clone https://github.com/SalzBytes/menu-editor-ts.git
@@ -47,17 +78,43 @@ does **not** bundle it.
 
 ## How to use
 
-### Imports
+Two ways to load it after `bun run build`.
+
+#### A) ES module — from `lib/` (bundlers / TS projects)
 
 Import the structural CSS and the `MenuEditor` class from the built library:
 
 ```js
-import "./lib/css/styles.css"; // structural styles only (framework CSS loaded separately)
-import { MenuEditor } from "./lib/index.js";
+import './lib/css/styles.css'; // structural styles only (framework CSS loaded separately)
+import { MenuEditor } from './lib/index.js';
 ```
 
-> The framework CSS (Bootstrap/Tailwind, see above) must be loaded separately —
-> the library only provides structural styles.
+#### B) Browser `<script>` — from `dist/` (no bundler)
+
+`bun run build` also emits a self-contained browser bundle in `dist/`
+(`menu-editor.min.js` with SortableJS included, exposing the global
+`MenuEditor`, plus `styles.min.css`). Drop the files in and use directly:
+
+```html
+<!-- required framework CSS (Bootstrap theme shown) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<!-- structural styles -->
+<link rel="stylesheet" href="dist/styles.min.css">
+
+<div id="element-id"></div>
+
+<!-- the library (SortableJS bundled) -->
+<script src="dist/menu-editor.min.js"></script>
+<script>
+  var menuEditor = new MenuEditor('element-id', { maxLevel: 3, theme: 'bootstrap' });
+  // menuEditor.setArray([...]); menuEditor.mount();
+</script>
+```
+
+See `examples/index.html` for a complete working `dist/` setup.
+
+> The framework CSS (Bootstrap/Tailwind, see above) must be loaded separately in
+> both cases — the library only provides structural styles.
 
 ### Themes
 

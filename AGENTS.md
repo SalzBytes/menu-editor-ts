@@ -5,7 +5,15 @@ Read before coding. Concept first, then implement.
 ## Project
 
 Vanilla JS menu editor lib, built with TypeScript + Vite. Drag/drop nested menu
-via SortableJS. Ships ESM + UMD + `.d.ts` + CSS to `lib/`.
+via SortableJS. Two build outputs, both git-ignored, both from `bun run build`:
+- `lib/` — package build (ESM + UMD + `.d.ts` + `css/styles.css`).
+- `dist/` — browser drop-in (`menu-editor.min.js` w/ SortableJS bundled, global
+  `MenuEditor`, + `styles.min.css`). No CDN yet.
+
+Not on npm — installed from GitHub (`bun add github:SalzBytes/menu-editor-ts`).
+The `prepare` script runs `bun run build` so git-installs produce outputs.
+Fork of `davicotico/menu-editor`. Bump `package.json` version + `CHANGELOG.md`
+together on release.
 
 ## Package manager
 
@@ -28,8 +36,10 @@ Critical distinction. Do not mix.
 - **Structural** (`jme-*`): drive JS logic — SortableJS handle/ghost, level
   traversal, querySelectors. NEVER theme-dependent. Never rename without updating
   every selector.
+  - `jme-editor` — root container; structural CSS is scoped under it so the lib
+    doesn't leak styles into the host page.
   - `jme-item`   — each menu node (replaces reliance on `.list-group-item`)
-  - `jme-handle` — drag handle
+  - `jme-handle` — drag handle (keyboard-operable, has `aria-label`)
   - `jme-list`   — nested list container
   - `ghost`, `chosen` — SortableJS drag state
 - **Presentational**: theme class names (Bootstrap/Tailwind). Live ONLY in the
@@ -43,10 +53,12 @@ Adding a theme = add one entry. No code branches per theme.
 
 ## Styles
 
-- Bootstrap is OPTIONAL. Lib must NOT import full Bootstrap SCSS into its bundle.
+- Framework CSS (Bootstrap/Tailwind) is OPTIONAL to install (optional peer deps)
+  but REQUIRED at runtime for the chosen `theme`. Lib must NOT import a full
+  framework SCSS into its bundle.
 - `src/scss/core.scss` — theme-agnostic structural styles only (handle, ghost,
-  spacing). Always safe to ship.
-- Bootstrap consumers load Bootstrap themselves (CDN or their build).
+  spacing), scoped under `.jme-editor`. Always safe to ship.
+- Consumers load their framework themselves (CDN or their build).
 - `src/index.ts` imports only `core.scss`.
 
 ## Structure
@@ -57,10 +69,18 @@ src/
   themes.ts       theme class registry
   constants.ts    icons + defaults
   types.ts        shared types
+  functions.ts    dataset/level helpers
   core/           logic: MenuEditor, MenuContainer, Item, ButtonGroup, Collection, ElementItem, ItemEvent
   scss/core.scss  structural styles
-dev/              local playground (Bootstrap via CDN)
+examples/         single-file dist/ demo (Bootstrap ⇄ Tailwind switcher, Bootstrap via CDN)
+serve.json        `bun run dev` redirect: / -> /examples/
 ```
+
+## Dev / build
+
+- `bun run dev` — builds `dist/`, serves repo root; `serve.json` redirects `/` to
+  the `examples/` demo (loads the `dist/` bundle, so it needs a build first).
+- `bun run build` — emits `lib/` + `dist/`.
 
 ## Verify
 

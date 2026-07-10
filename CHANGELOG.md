@@ -2,7 +2,7 @@
 
 ## Changelog
 
-#### Unreleased
+#### v1.3.0
 
 * chore: migrated package manager to **Bun** (`bun.lock` is source of truth).
 * feat: **theme option** (`bootstrap` | `tailwind`) via a class registry (`src/themes.ts`). Default `bootstrap`.
